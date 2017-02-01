@@ -107,6 +107,13 @@ public class ExceptionUtil {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         messageTwo = (MessageB) session.get(MessageB.class, messageOne.getId());
+
+        if (isTransient(messageTwo)) {
+            logger.debug("\n\n\tmessageTwo is transient\n");
+        } else {
+            logger.debug("\n\n\tmessageTwo is NOT transient\n");
+        }
+
         setOfMessages.add(messageTwo);
         messageOne.compare(messageTwo);
         messageTwo.setText(textTwo);
