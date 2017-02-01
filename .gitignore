@@ -1,0 +1,8 @@
+hibernate-set.log
+target/
+
+# IntelliJ project files
+.idea/
+*.iml
+/hibernate-set.log.1
+hibernate-set.log.1
