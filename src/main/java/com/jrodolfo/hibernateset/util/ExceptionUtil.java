@@ -26,7 +26,6 @@ public class ExceptionUtil {
     private final static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final static String textOne = "text 1";
     private final static String textTwo = "text 2";
-    private final static String textThree = "text 3";
 
     public static void getNonUniqueObjectException() {
 
@@ -56,37 +55,37 @@ public class ExceptionUtil {
      */
     private static void createNonUniqueObjectExceptionA() throws NonUniqueObjectException {
         logger.debug("\n\n\t====== Running for MessageA ======\n");
-        final MessageA messageAOne;
-        final MessageA messageATwo;
-        Set<MessageA> setOfMessagesA = new HashSet();
+        final MessageA messageOne;
+        final MessageA messageTwo;
+        Set<MessageA> setOfMessages = new HashSet();
 
-        messageAOne = serviceA.create(textOne);
-        setOfMessagesA.add(messageAOne);
-        if (isTransient(messageAOne)) {
-            logger.debug("\n\n\tmessageAOne is transient\n");
+        messageOne = serviceA.create(textOne);
+        setOfMessages.add(messageOne);
+        if (isTransient(messageOne)) {
+            logger.debug("\n\n\tmessageOne is transient\n");
         } else {
-            logger.debug("\n\n\tmessageAOne is NOT transient\n");
+            logger.debug("\n\n\tmessageOne is NOT transient\n");
         }
 
-        Session sessionA = HibernateUtil.getSessionFactory().openSession();
-        sessionA.beginTransaction();
-        messageATwo = (MessageA) sessionA.get(MessageA.class, messageAOne.getId());
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        messageTwo = (MessageA) session.get(MessageA.class, messageOne.getId());
 
-        if (isTransient(messageATwo)) {
-            logger.debug("\n\n\tmessageATwo is transient\n");
+        if (isTransient(messageTwo)) {
+            logger.debug("\n\n\tmessageTwo is transient\n");
         } else {
-            logger.debug("\n\n\tmessageATwo is NOT transient\n");
+            logger.debug("\n\n\tmessageTwo is NOT transient\n");
         }
 
-        setOfMessagesA.add(messageATwo);
-        messageAOne.compare(messageATwo);
-        messageATwo.setText(textTwo);
-        messageAOne.compare(messageATwo);
-        for (MessageA messageA : setOfMessagesA) {
-            sessionA.update(messageA); // Throws exception!
+        setOfMessages.add(messageTwo);
+        messageOne.compare(messageTwo);
+        messageTwo.setText(textTwo);
+        messageOne.compare(messageTwo);
+        for (MessageA message : setOfMessages) {
+            session.update(message); // Throws exception!
         }
-        sessionA.getTransaction().commit();
-        sessionA.close();
+        session.getTransaction().commit();
+        session.close();
     }
 
     /**
@@ -98,25 +97,25 @@ public class ExceptionUtil {
      */
     private static void createNonUniqueObjectExceptionB() throws NonUniqueObjectException {
         logger.debug("\n\n\t====== Running for MessageB ======\n");
-        final MessageB messageBOne;
-        final MessageB messageBTwo;
-        Set<MessageB> setOfMessagesB = new HashSet();
+        final MessageB messageOne;
+        final MessageB messageTwo;
+        Set<MessageB> setOfMessages = new HashSet();
 
-        messageBOne = serviceB.create(textOne);
-        setOfMessagesB.add(messageBOne);
+        messageOne = serviceB.create(textOne);
+        setOfMessages.add(messageOne);
 
-        Session sessionB = HibernateUtil.getSessionFactory().openSession();
-        sessionB.beginTransaction();
-        messageBTwo = (MessageB) sessionB.get(MessageB.class, messageBOne.getId());
-        setOfMessagesB.add(messageBTwo);
-        messageBOne.compare(messageBTwo);
-        messageBTwo.setText(textTwo);
-        messageBOne.compare(messageBTwo);
-        for (MessageB messageB : setOfMessagesB) {
-            sessionB.update(messageB); // Does not throws exception!
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        messageTwo = (MessageB) session.get(MessageB.class, messageOne.getId());
+        setOfMessages.add(messageTwo);
+        messageOne.compare(messageTwo);
+        messageTwo.setText(textTwo);
+        messageOne.compare(messageTwo);
+        for (MessageB message : setOfMessages) {
+            session.update(message); // Throws exception!
         }
-        sessionB.getTransaction().commit();
-        sessionB.close();
+        session.getTransaction().commit();
+        session.close();
     }
 
     private static boolean isTransient(Object o) {
