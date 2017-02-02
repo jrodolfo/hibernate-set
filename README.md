@@ -2,6 +2,21 @@
 
 Small project that shows how a NonUniqueObjectException can happen in Hibernate
 projects, specially when we are keeping the entities on a Set data structure.
+We have in this project class MessageA that does NOT implement equals(), and class
+MessageB that implements equals(). Both are being used in Set, and being persisted
+via Hibernate. One would think that a class implementing equals() would be enough to
+avoid this NonUniqueObjectException, but what I found in this project that this is not
+enough. If you run MessageApp.main(), you will see that both MessageA and MessageB throws
+NonUniqueObjectException.
+
+More info:
+
+Implementing equals() and hashCode()
+https://docs.jboss.org/hibernate/stable/core.old/reference/en/html/persistent-classes-equalshashcode.html
+
+Effective Java: Equals and HashCode
+http://www.ideyatech.com/effective-java-equals-and-hashcode/
+
 
 ## Pre-requisites, configurations, and how to run it
 
