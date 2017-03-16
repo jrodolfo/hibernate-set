@@ -113,6 +113,13 @@
             <version>4.3.5.Final</version>
         </dependency>
 
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-orm &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-orm</artifactId>-->
+            <!--<version>1.2.9</version>-->
+        <!--</dependency>-->
+
 
         <!-- https://mvnrepository.com/artifact/org.jboss/jandex -->
         <dependency>

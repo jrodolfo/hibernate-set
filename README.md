@@ -20,7 +20,7 @@ http://www.ideyatech.com/effective-java-equals-and-hashcode/
 
 ## Pre-requisites, configurations, and how to run it
 
-Pre-requisites: JDK, Maven, MySQL server, MySQL client (e.g. Oracle SQL Developer, HeidiSQL, TOAD), and Git.
+Pre-requisites: JDK, Maven, MySQL server, MySQL client (e.g. HeidiSQL, SQuirreL SQL, Oracle SQL Developer, TOAD), and Git.
 
 1) Clone the project:
 
